@@ -6,7 +6,10 @@ declare global {
 		// interface Locals {}
 		// interface PageData {}
 		// interface Platform {}
+		interface PageState {
+			dialogOpen?: string;
+		}
 	}
 }
 
-export {};
+export { };

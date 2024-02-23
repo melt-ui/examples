@@ -1,12 +1,21 @@
 <script lang="ts">
-	import { melt } from '@melt-ui/svelte';
+	import { createSync, melt } from '@melt-ui/svelte';
 	import { dialogRegistry, type DialogName } from '.';
+	import { page } from '$app/stores';
 
 	export let name: DialogName;
 
 	const {
-		elements: { portalled, title, content, description, close, overlay }
+		elements: { portalled, title, content, description, close, overlay },
+		states: { open }
 	} = dialogRegistry.get(name);
+
+	const sync = createSync({ open });
+	$: sync.open($page.state.dialogOpen === name, ($open) => {
+		if ($page.state.dialogOpen !== name) {
+			dialogRegistry.shallow(name, $open);
+		}
+	});
 </script>
 
 <div use:melt={$portalled}>

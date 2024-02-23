@@ -1,6 +1,7 @@
 import { createDialog, type CreateDialogProps, type Dialog as DialogType } from '@melt-ui/svelte';
 import Trigger from './Trigger.svelte';
 import Content from './Content.svelte';
+import { pushState } from '$app/navigation';
 
 export const DIALOG_NAMES = ['settings', 'login', 'delete'] as const;
 
@@ -22,9 +23,20 @@ function createDialogRegistry() {
 		registry.set(name, dialog);
 	}
 
+	// Shallow routing
+	function shallow(name: DialogName, open: boolean) {
+		if (open) {
+
+			pushState('', {
+				dialogOpen: open ? name : 'none'
+			});
+		}
+	}
+
 	return {
 		get,
-		set
+		set,
+		shallow
 	};
 }
 
