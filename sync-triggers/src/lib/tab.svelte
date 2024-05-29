@@ -4,7 +4,7 @@
 
 	export let tab: string;
 
-	const {tabs, content} = TabsContext.get();
+	const { tabs, content } = TabsContext.get();
 
 	onMount(() => {
 		tabs.update((curr) => {
